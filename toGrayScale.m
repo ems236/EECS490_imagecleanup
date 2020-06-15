@@ -6,4 +6,11 @@ function grayScale=toGrayScale(img)
 [width, height, ~] = size(img);
 grayScale = zeros(width, height);
 
-for
+for x = 1:width
+   for y = 1:height
+        grayVal = colorToGray(img(x, y, :));
+        grayScale(x, y) = grayVal;
+   end
+end
+
+grayScale = uint8(grayScale);
