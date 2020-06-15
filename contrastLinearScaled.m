@@ -7,6 +7,6 @@ function imgCopy=contrastLinearScaled(img)
     for x = 1:width
         for y = 1:height
             val = img(x, y);
-            imgCopy(x, y) = uint8(val * (255 / (max - min)));
+            imgCopy(x, y) = uint8((val - min) * (255 / (max - min)));
         end
     end
