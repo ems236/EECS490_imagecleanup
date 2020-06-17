@@ -6,11 +6,10 @@ function count=writeraw(G, filename)
 % count: return value, the elements written to file
 
  disp([' Write image data to'  filename ' ...']);
- fid=fopen(filename,'wb');
+ [fid, msg]=fopen(filename,'wb');
  if (fid==-1)
-    error('can not open output image filem press CTRL-C to exit \n');
+    error(msg + " can not open output image filem press CTRL-C to exit \n");
  end
 G=G'; 
 count=fwrite(fid,G, 'uchar');
 fclose(fid);
-G=G';
