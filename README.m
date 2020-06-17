@@ -79,9 +79,9 @@ writeraw_color(negJet, outputDir + "jet_negative.raw");
 saveas(f4, outputDir + "jet_negative.png");
 
 f5 = figure;
-title("Original Histogram");
 jetHist = histFor(jet, 3);
 jetChart = bar(jetHist);
+title("Original Jet Histogram");
 jetChart(1).FaceColor = "r";
 jetChart(2).FaceColor = "g";
 jetChart(3).FaceColor = "b";
@@ -89,9 +89,9 @@ jetChart(3).FaceColor = "b";
 saveas(f5, outputDir + "jet_histogram.png");
 
 f6 = figure;
-title("Negative Histogram");
 negHist = histFor(negJet, 3);
 negChart = bar(negHist);
+title("Negative Jet Histogram");
 negChart(1).FaceColor = "r";
 negChart(2).FaceColor = "g";
 negChart(3).FaceColor = "b";
@@ -235,7 +235,7 @@ saveas(f25,  outputDir + "rose_bright_histEq.png");
 
 f26 = figure;
 bar(histFor(brightHistEq, 1));
-title("Histogram Equalized Mid Rose");
+title("Histogram Equalized Bright Rose");
 saveas(f26, outputDir + "rose_bright_histEq_hist.png");
 
 f27 = figure;
@@ -243,13 +243,46 @@ f27 = figure;
 plot(xvals, yvals);
 title("Bright Rose Histogram Equalization Transfer Function");
 saveas(f27, outputDir + "rose_bright_histEq_transfer.png");
-end
 
-% Problem 3: Histogram Equalization contrast enhancement
-% Implementation: Histogram Equalization with uniform cdf
-% M-file name: contrastHistogramEqualized.m
-% Usage: new_image = contrastHistogramEqualized(img)
-% Output image: rose_dark_histEq.raw, rose_mid_histEq.raw, rose_light_histEq.raw 
-% Output plots: rose_dark_histEq_hist.png, rose_mid_histEq_hist.png, rose_light_histEq_hist.png,
-%   rose_dark_histEq_transfer.png, rose_mid_histEq_transfer.png,
-%   rose_histEq_linear_transfer.png,
+% Problem 3.1: Noise removal on black and white images
+% Implementation: 5x5 guassian mask
+% M-file name: gaussBlur5x5.m
+% Usage: new_image = gaussBlur5x5(img)
+% Output images: rose_uniform_removed.raw, rose_gauss_removed.raw
+
+disp("Running noise removal on black and white...");
+uniform = readraw(inputDir + "rose_uni.raw");
+gauss = readraw(inputDir + "rose_gau.raw");
+
+blurredUni = gaussBlur5x5(uniform);
+f28 = figure;
+imshow(blurredUni);
+writeraw(blurredUni, outputDir + "rose_uniform_removed.raw");
+saveas(f28, outputDir + "rose_uniform_removed.png");
+
+f29 = figure;
+
+blurredGauss = gaussBlur5x5(gauss);
+imshow(blurredGauss);
+writeraw(blurredGauss, outputDir + "rose_gauss_removed.raw");
+saveas(f29, outputDir + "rose_gauss_removed.png");
+
+% Problem 3.2: Noise removal on color image
+% Implementation: 5x5 + shaped median mask, followed by 5x5 guassian mask
+%   on each channel
+% M-file name: applyMedianFilter.m, gaussBlur5x5.m
+% Usage: new_image = gaussBlur5x5(applyMedianFiler(img))
+% Output images: rose_color_noise_removed.raw
+disp("Running noise removal on color...");
+f30 = figure;
+colorNoise = readraw_color("..\srcImages\rose_color_noise.raw");
+
+medianed = applyMedianFilter(colorNoise);
+blurredMedian = gaussBlur5x5(medianed);
+
+imshow(blurredMedian);
+
+writeraw_color(blurredMedian, outputDir + "rose_color_noise_removed.raw");
+saveas(f30, outputDir + "rose_color_noise_removed.png");
+
+end
