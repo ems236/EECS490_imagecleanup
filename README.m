@@ -12,7 +12,11 @@
 %  string path to output image/plot directory
 % NOTE: the output directory must already exist or errors will occur.
 
-%  run the readme from terminal / cmd: 
+%  run readme from the matlab terminal:
+%  README '..\srcImages\' '..\outImages\'
+%  
+%  Note I only tried this in powershell
+%  run the readme from terminal / cmd
 %  matlab -r "README "..\srcImages\" "..\destImages\""
 %
 % Problem 1.1: Color to Gray-Scale
