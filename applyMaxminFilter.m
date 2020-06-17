@@ -1,2 +1,2 @@
-function imgCopy=applyMaxminFilter(img)
-    imgCopy = applyNonlinearFilter(img, @maximin);
+function imgCopy=applyMaxminFilter(img, size)
+    imgCopy = applyNonlinearFilter(img, @maximin, size);

@@ -10,6 +10,7 @@
 % 
 %  Arguments: string path to source image directory,
 %  string path to output image/plot directory
+% NOTE: the output directory must already exist or errors will occur.
 
 %  run the readme from terminal / cmd: 
 %  matlab -r "README "..\srcImages\" "..\destImages\""
@@ -64,7 +65,7 @@ saveas(f3, outputDir + "library_gray_marked.png");
 disp("writing to " + outputDir + "library_gray_marked.raw");
 
 % Problem 1.3: Creating image negative
-% Implementation: Pixel level transform -- (-1 * amplitude) mod 255
+% Implementation: Pixel level transform -- 255-amplitude
 % M-file name: negativeImg.m
 % Usage: new_image = negativeImg(img)
 % Output image: jet_negative.raw
@@ -96,7 +97,7 @@ negChart(1).FaceColor = "r";
 negChart(2).FaceColor = "g";
 negChart(3).FaceColor = "b";
 
-saveas(f6,  outputDir + "jet_histogram.png");
+saveas(f6,  outputDir + "jet_histogram_negative.png");
 
 disp("writing to " + outputDir + "jet_negative.raw");
 disp("writing plots to " + outputDir + "jet_histogram.png and jet_negative_histogram.png");
@@ -247,14 +248,14 @@ saveas(f27, outputDir + "rose_bright_histEq_transfer.png");
 % Problem 3.1: Noise removal on black and white images
 % Implementation: 5x5 guassian mask
 % M-file name: gaussBlur5x5.m
-% Usage: new_image = gaussBlur5x5(img)
+% Usage: new_image = gaussBlur7x7(img)
 % Output images: rose_uniform_removed.raw, rose_gauss_removed.raw
 
 disp("Running noise removal on black and white...");
 uniform = readraw(inputDir + "rose_uni.raw");
 gauss = readraw(inputDir + "rose_gau.raw");
 
-blurredUni = gaussBlur5x5(uniform);
+blurredUni = gaussBlur7x7(uniform);
 f28 = figure;
 imshow(blurredUni);
 writeraw(blurredUni, outputDir + "rose_uniform_removed.raw");
@@ -277,7 +278,7 @@ disp("Running noise removal on color...");
 f30 = figure;
 colorNoise = readraw_color("..\srcImages\rose_color_noise.raw");
 
-medianed = applyMedianFilter(colorNoise);
+medianed = applyMedianFilter(colorNoise, 9);
 blurredMedian = gaussBlur5x5(medianed);
 
 imshow(blurredMedian);

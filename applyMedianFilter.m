@@ -1,2 +1,2 @@
-function imgCopy=applyMedianFilter(img)
-    imgCopy = applyNonlinearFilter(img, @median);
+function imgCopy=applyMedianFilter(img, size)
+    imgCopy = applyNonlinearFilter(img, @median, size);
