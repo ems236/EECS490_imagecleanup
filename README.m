@@ -246,8 +246,8 @@ title("Bright Rose Histogram Equalization Transfer Function");
 saveas(f27, outputDir + "rose_bright_histEq_transfer.png");
 
 % Problem 3.1: Noise removal on black and white images
-% Implementation: 5x5 guassian mask
-% M-file name: gaussBlur5x5.m
+% Implementation: 7x7 guassian mask
+% M-file name: gaussBlur7x7.m
 % Usage: new_image = gaussBlur7x7(img)
 % Output images: rose_uniform_removed.raw, rose_gauss_removed.raw
 
@@ -269,17 +269,18 @@ writeraw(blurredGauss, outputDir + "rose_gauss_removed.raw");
 saveas(f29, outputDir + "rose_gauss_removed.png");
 
 % Problem 3.2: Noise removal on color image
-% Implementation: 5x5 + shaped median mask, followed by 5x5 guassian mask
+% Implementation: 9x9 + shaped median mask, followed by 5x5 guassian mask
 %   on each channel
 % M-file name: applyMedianFilter.m, gaussBlur5x5.m
-% Usage: new_image = gaussBlur5x5(applyMedianFiler(img))
+% Usage: new_image = gaussBlur5x5(applyMedianFiler(img, maskSize))
 % Output images: rose_color_noise_removed.raw
 disp("Running noise removal on color...");
 f30 = figure;
 colorNoise = readraw_color("..\srcImages\rose_color_noise.raw");
 
-medianed = applyMedianFilter(colorNoise, 9);
-blurredMedian = gaussBlur5x5(medianed);
+medianed = applyMedianFilter(colorNoise, 7);
+medianed2 = applyMedianFilter(medianed, 7);
+blurredMedian = gaussBlur5x5(medianed2);
 
 imshow(blurredMedian);
 
