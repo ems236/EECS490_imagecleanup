@@ -4,8 +4,8 @@ function [positionX, positionY]=waterMarkOrigin(img, watermark)
     centerY = ceil(height / 2);
     
     [waterWidth, waterHeight, ~] = size(watermark);
-    offsetWaterX = ceil(waterWidth / 2) - 1;
-    offsetWaterY = ceil(waterHeight / 2) - 1;
+    offsetWaterX = ceil(waterWidth / 2);
+    offsetWaterY = ceil(waterHeight / 2);
     
     offsetWaterX = offsetWaterX - (mod(width, 2) * mod(waterWidth, 2));
     offsetWaterY = offsetWaterY - (mod(height, 2) * mod(waterHeight, 2));
